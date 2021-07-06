@@ -1,0 +1,19 @@
+.card {
+  position: relative;
+  margin: 0 auto;
+  padding:0;
+  width: 100%;
+  max-height: 361px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  color: #000000;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .card {
+    margin-bottom: 20px;
+    width: 282px;
+  }
+}

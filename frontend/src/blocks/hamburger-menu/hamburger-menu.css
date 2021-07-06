@@ -1,0 +1,19 @@
+.hamburger-menu {
+  display: none;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color:inherit;
+  position: relative;
+}
+
+.hamburger-menu:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 720px) {
+  .hamburger-menu {
+    display: block;
+  }
+}

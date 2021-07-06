@@ -1,0 +1,13 @@
+.page {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  padding: 45px 19px 0;
+  background-color: #000000;
+  font-family: "Inter", "Arial", sans-serif;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

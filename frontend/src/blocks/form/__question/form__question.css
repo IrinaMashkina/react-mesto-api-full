@@ -1,0 +1,9 @@
+.form__question {
+    margin: 15px auto 0;
+    font-family: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+}

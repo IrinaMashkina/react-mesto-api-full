@@ -1,0 +1,16 @@
+.profile__information {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media screen and (max-width: 720px) {
+  .profile__information {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-bottom: 36px;
+    margin-top: 36px;
+  }
+}

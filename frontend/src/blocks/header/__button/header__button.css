@@ -1,0 +1,15 @@
+.header__button {
+  background-color: inherit;
+  color:rgba(169, 169, 169, 1);
+  border: none;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.header__button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

@@ -1,0 +1,12 @@
+.form__link {
+  display: inline-block;
+  padding: 0 6px;
+  color: inherit;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.form__link:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

@@ -1,0 +1,20 @@
+.form__input {
+  position: relative;
+  background-color: inherit;
+  color: white;
+  width: 100%;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  padding: 0 0 13px;
+  margin: 0;
+  margin-top: 30px;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid #cccccc;
+}
+
+.form__input:focus {
+  outline: none;
+}

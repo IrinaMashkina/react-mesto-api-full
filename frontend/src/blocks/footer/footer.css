@@ -1,0 +1,7 @@
+.footer {
+  margin: 0 auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  max-width: 880px;
+  padding: 67px 0 60px;
+}

@@ -1,0 +1,36 @@
+.hamburger-menu__line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 3px;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.hamburger-menu__line::before {
+    position: absolute;
+    top: 9px;
+    left:0;
+    content: "";
+    width: 24px;
+    height: 3px;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.hamburger-menu__line::after {
+    position: absolute;
+    top:18px;
+    left:0;
+    content: "";
+    width: 24px;
+    height: 3px;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}

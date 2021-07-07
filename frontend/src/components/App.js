@@ -50,6 +50,14 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       setIsLoadingInitialCards(true);
+      setIsLoadingUserInfo(true);
+
+      api
+      .getUserInfo()
+      .then((res) => setCurrentUser(res))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingUserInfo(false));
+
       api
         .getInitialCards()
         .then((data) => {
@@ -64,18 +72,10 @@ function App() {
             }))
           );
         })
-        .catch((err) => console.log(err)).finally(() => setIsLoadingInitialCards(false))
+        .catch((err) => console.log(err))
+        .finally(() => setIsLoadingInitialCards(false))
     }
   }, [loggedIn]);
-   
-  useEffect(() => {
-    setIsLoadingUserInfo(true);
-    api
-      .getUserInfo()
-      .then((res) => setCurrentUser(res))
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoadingUserInfo(false));
-  }, []);
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -179,8 +179,9 @@ function App() {
     auth
       .authorize(data)
       .then((token) => {
+        console.log(`token: ${token}`);
         setUserEmail(data.email);
-        localStorage.setItem("jwt", token.token);
+        localStorage.setItem("jwt", token);
         setLoggedIn(true);
         history.push("/");
       })

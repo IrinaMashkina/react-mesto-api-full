@@ -30,7 +30,7 @@ class Auth {
         password: data.password,
         email: data.email,
       }),
-    }).then(this.handleResponse);
+    }).then(this.handleResponse).catch((err) => console.log(err));
   }
 
   checkToken(token) {

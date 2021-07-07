@@ -118,7 +118,7 @@ const login = (req, res, next) => {
           httpOnly: true,
           sameSite: true,
         })
-        .send(user);
+        .send(token);
     })
     .catch(next);
 };

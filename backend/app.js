@@ -29,27 +29,27 @@ mongoose.connection.on("connected", () => console.log("Mongodb connected"));
 mongoose.connection.on("error", (err) => console.log(`Ошибка ${err}`));
 
 // Массив доменов, с которых разрешены кросс-доменные запросы
-const allowedCors = [
-  "https://mesto.yandex.students.nomoredomains.club",
-  "http://mesto.yandex.students.nomoredomains.club",
-  "http://localhost:3000",
-];
+// const allowedCors = [
+//   "https://mesto.yandex.students.nomoredomains.club",
+//   "http://mesto.yandex.students.nomoredomains.club",
+//   "http://localhost:3000",
+// ];
 
-app.use(function (req, res, next) {
-  const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
-  const { method } = req; // Сохраняем тип запроса (HTTP-метод) в соответствующую переменную
-  const requestHeaders = req.headers["access-control-request-headers"];
+// app.use(function (req, res, next) {
+//   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
+//   const { method } = req; // Сохраняем тип запроса (HTTP-метод) в соответствующую переменную
+//   const requestHeaders = req.headers["access-control-request-headers"];
 
-  if (allowedCors.includes(origin)) {
-    if (method === "OPTIONS") {
-      res.header("Access-Control-Allow-Methods", requestHeaders);
-      res.header("Access-Control-Allow-Origin", origin);
-    }
-    res.header("Access-Control-Allow-Origin", origin);
-  }
+//   if (allowedCors.includes(origin)) {
+//     if (method === "OPTIONS") {
+//       res.header("Access-Control-Allow-Methods", requestHeaders);
+//       res.header("Access-Control-Allow-Origin", origin);
+//     }
+//     res.header("Access-Control-Allow-Origin", origin);
+//   }
 
-  next();
-});
+//   next();
+// });
 
 // app.use(cors());
 
@@ -66,18 +66,18 @@ app.use(function (req, res, next) {
 
 // app.options('*', cors());
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "*");
-//   res.header(
-//     "Access-Control-Allow-Methods",
-//     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
-//   );
-//   if (req.method === "OPTIONS") {
-//     res.send(200);
-//   }
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+  );
+  if (req.method === "OPTIONS") {
+    res.send(200);
+  }
+  next();
+});
 
 app.use(bodyParser.json());
 app.use(

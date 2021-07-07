@@ -72,7 +72,6 @@ class Api {
       headers: this._headers,
     }).then(this.handleResponse);
   }
-    
 
   editAvatar(link) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
@@ -89,8 +88,10 @@ class Api {
 const api = new Api({
   baseUrl: "https://mesto-api.students.nomoredomains.club",
   headers: {
-    authorization: "8096f474-afa5-4224-80da-83335499b6b6",
     "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem('token')}`,
+    
   },
 });
 

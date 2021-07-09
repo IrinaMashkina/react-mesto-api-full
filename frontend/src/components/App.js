@@ -33,11 +33,13 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  const [isPopupDeleteCardOpen, setIsPopupDeleteCardOpen] = React.useState(false);
+  const [isPopupDeleteCardOpen, setIsPopupDeleteCardOpen] =
+    React.useState(false);
 
   const history = useHistory();
 
-  const [isLoadingInitialCards, setIsLoadingInitialCards] = React.useState(false);
+  const [isLoadingInitialCards, setIsLoadingInitialCards] =
+    React.useState(false);
   const [isLoadingEditAvatar, setIsLoadingEditAvatar] = React.useState(false);
   const [isLoadingUserInfo, setIsLoadingUserInfo] = React.useState(false);
   const [isLoadingAddNewCard, setIsLoadingAddNewCard] = React.useState(false);
@@ -45,19 +47,11 @@ function App() {
   const [isLoadingSignup, setIsLoadingSignup] = React.useState(false);
   const [isLoadingSignin, setIsLoadingSignin] = React.useState(false);
 
-  
- 
   useEffect(() => {
     if (loggedIn) {
       setIsLoadingInitialCards(true);
       setIsLoadingUserInfo(true);
-
-      api
-      .getUserInfo()
-      .then((res) => setCurrentUser(res))
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoadingUserInfo(false));
-
+      
       api
         .getInitialCards()
         .then((data) => {
@@ -72,10 +66,19 @@ function App() {
             }))
           );
         })
-        .catch((err) => console.log(err))
-        .finally(() => setIsLoadingInitialCards(false))
-    }
+        .catch((err) => console.log(err)).finally(() => setIsLoadingInitialCards(false))
+        
+    api
+      .getUserInfo()
+      .then((res) => setCurrentUser(res))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingUserInfo(false));
+    
+      
+      }
   }, [loggedIn]);
+   
+
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -118,8 +121,6 @@ function App() {
       .finally(() => setIsLoadingUserInfo(false));
   }
 
-  
-
   function handleUpdateAavatar(link) {
     setIsLoadingEditAvatar(true);
     api
@@ -141,11 +142,11 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(err))
-      .finally(() =>setIsLoadingAddNewCard(false));
+      .finally(() => setIsLoadingAddNewCard(false));
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -178,12 +179,12 @@ function App() {
     setIsLoadingSignin(true);
     auth
       .authorize(data)
-      .then((token) => {
-        console.log(`token: ${token}`);
+      .then((res) => { 
         setUserEmail(data.email);
-        localStorage.setItem("jwt", token);
+        localStorage.setItem("jwt", res.token);
         setLoggedIn(true);
         history.push("/");
+        
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoadingSignin(false));
@@ -211,18 +212,18 @@ function App() {
       })
       .finally(() => setIsLoadingSignup(false));
   }
-
   const handleCheckToken = React.useCallback(() => {
     const token = localStorage.getItem("jwt");
     auth
       .checkToken(token)
       .then((data) => {
-        setUserEmail(data.data.email);
+        setUserEmail(data.email);
         setLoggedIn(true);
         history.push("/");
       })
       .catch((err) => console.log(err));
   }, [history]);
+ 
 
   React.useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -241,10 +242,16 @@ function App() {
         />
         <Switch>
           <Route path="/sign-up">
-            <Register onRegistration={handleRegistration} isLoading={isLoadingSignup}/>
+            <Register
+              onRegistration={handleRegistration}
+              isLoading={isLoadingSignup}
+            />
           </Route>
           <Route path="/sign-in">
-            <Login onAuthotization={handleAuthorization} isLoading={isLoadingSignin} />
+            <Login
+              onAuthotization={handleAuthorization}
+              isLoading={isLoadingSignin}
+            />
           </Route>
           <ProtectedRoute
             path="/"
@@ -259,7 +266,6 @@ function App() {
             onPopupDeleteCardOpen={handleCardDeletePopup}
             isLoadingEditAvatar={isLoadingInitialCards}
             isLoadingUserInfo={isLoadingUserInfo}
-
           ></ProtectedRoute>
         </Switch>
 
@@ -283,7 +289,6 @@ function App() {
           isLoadingAddNewCard={isLoadingAddNewCard}
         />
 
-
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
@@ -293,14 +298,14 @@ function App() {
           unSuccessText="Что-то пошло не так! Попробуйте ещё раз."
         />
 
-        <PopupDeleteCard  
-      isOpen={isPopupDeleteCardOpen}
-      onClose={closeAllPopups}
-      title="Вы уверены?"
-      buttonText="Да"
-      onSubmit={handleCardDelete}
-      isLoading={isLoadingDeleteCard}
-      />
+        <PopupDeleteCard
+          isOpen={isPopupDeleteCardOpen}
+          onClose={closeAllPopups}
+          title="Вы уверены?"
+          buttonText="Да"
+          onSubmit={handleCardDelete}
+          isLoading={isLoadingDeleteCard}
+        />
         <Footer />
       </div>
     </CurrentUserContext.Provider>

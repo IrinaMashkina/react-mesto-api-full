@@ -1,14 +1,16 @@
+require('dotenv').config();
+
 const express = require("express");
 // const cors = require("cors");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 5000 } = process.env;
 
 const { login, createNewUser } = require("./controllers/users.js");
 const { auth } = require("./middlewares/auth");
@@ -32,7 +34,7 @@ mongoose.connection.on("error", (err) => console.log(`Ошибка ${err}`));
 // const allowedCors = [
 //   "https://mesto.yandex.students.nomoredomains.club",
 //   "http://mesto.yandex.students.nomoredomains.club",
-//   "http://localhost:3000",
+
 // ];
 
 // app.use(function (req, res, next) {
@@ -66,6 +68,7 @@ mongoose.connection.on("error", (err) => console.log(`Ошибка ${err}`));
 
 // app.options('*', cors());
 
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
@@ -74,10 +77,12 @@ app.use((req, res, next) => {
     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
   );
   if (req.method === "OPTIONS") {
-    res.send(200);
+   return  res.sendStatus(200);
   }
   next();
 });
+
+
 
 app.use(bodyParser.json());
 app.use(
@@ -86,25 +91,27 @@ app.use(
   })
 );
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.use(requestLogger); // подключаем логгер запросов
 
 // Чтобы на ревью мы смогли наверняка это протестировать, перед обработчиками роутов /signin и /signup добавьте такой код:
-app.get("/crash-test", () => {
-  setTimeout(() => {
-    throw new Error("Сервер сейчас упадёт");
-  }, 0);
-});
+// app.get("/crash-test", () => {
+//   setTimeout(() => {
+//     throw new Error("Сервер сейчас упадёт");
+//   }, 0);
+// });
 
 app.post("/signin", login);
 app.post("/signup", createNewUser);
-app.use(auth, usersRoutes);
-app.use(auth, cardsRoutes);
+
+app.use("/", auth, usersRoutes);
+app.use("/", auth, cardsRoutes);
 
 app.use(errorLogger);
 
 app.use(errors());
+
 app.use("*", () => {
   throw new NotFoundError("Не найден данный ресурс");
 });

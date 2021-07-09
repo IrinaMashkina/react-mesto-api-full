@@ -30,20 +30,21 @@ class Auth {
         password: data.password,
         email: data.email,
       }),
-    }).then(this.handleResponse).catch((err) => console.log(err));
+    }).then(this.handleResponse);
   }
 
   checkToken(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
-      headers: {...this._headers, "Authorization" : `Bearer ${token}`}
+      headers: { ...this._headers, authorization: `Bearer ${token}` },
     }).then(this.handleResponse);
   }
 }
 
 const auth = new Auth({
-  baseUrl: "https://mesto-api.students.nomoredomains.club",
-  headers: { "Content-Type": "application/json" },
+  // baseUrl: "https://mesto-api.students.nomoredomains.club",
+  baseUrl: "http://localhost:5000",
+  headers: { "Content-Type": "application/json", Accept: "application/json" },
 });
 
 export default auth;

@@ -11,7 +11,7 @@ module.exports.auth = (req, res, next) => {
 
   if (!authorization || !authorization.startsWith("Bearer ")) {
 
-    throw new UnauthorizedError("Необходима авторизация authoriz");
+    throw new UnauthorizedError("Необходима авторизация");
   }
 
   const token = extractBearerToken(authorization);
@@ -24,11 +24,12 @@ module.exports.auth = (req, res, next) => {
 
   } catch (err) {
     console.log("Если с токеном что-то не так - вернётся ошибка")
-    throw new UnauthorizedError(`Необходима авторизация`);
+    throw new UnauthorizedError(`Что-то с токеном`);
   }
 
   req.user = payload; // записываем пейлоуд в объект запроса
 
 
   next(); // пропускаем запрос дальше
+  return true;
 };

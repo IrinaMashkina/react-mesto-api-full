@@ -10,9 +10,9 @@ const mongoose = require("mongoose");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
-app.use(cors());
-const { PORT = 3000 } = process.env;
 
+const { PORT = 3000 } = process.env;
+app.use(cors());
 const { login, createNewUser } = require("./controllers/users.js");
 const { auth } = require("./middlewares/auth");
 const usersRoutes = require("./routes/users.js");

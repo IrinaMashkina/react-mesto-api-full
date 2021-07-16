@@ -61,6 +61,7 @@ function App() {
       api
         .getInitialCards()
         .then((data) => {
+          if (!data.message) {
           setCards(
             data.map((item) => ({
               likes: item.likes,
@@ -70,7 +71,7 @@ function App() {
               alt: item.name,
               link: item.link,
             }))
-          );
+          )};
         })
         .catch((err) => console.log(err))
         .finally(() => setIsLoadingInitialCards(false));

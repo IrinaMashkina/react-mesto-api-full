@@ -89,8 +89,8 @@ app.get("/crash-test", () => {
 app.post("/signin", login);
 app.post("/signup", createNewUser);
 
-app.use(auth, usersRoutes);
-app.use(auth, cardsRoutes);
+app.use("/", auth, usersRoutes);
+app.use("/", auth, cardsRoutes);
 
 app.use(errorLogger);
 

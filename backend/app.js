@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 
 const { requestLogger, errorLogger } = require("./middlewares/logger");
@@ -31,26 +31,26 @@ mongoose.connection.on("connected", () => console.log("Mongodb connected"));
 mongoose.connection.on("error", (err) => console.log(`Ошибка ${err}`));
 
 // Массив доменов, с которых разрешены кросс-доменные запросы
-const allowedCors = [
-  "https://mesto.yandex.students.nomoredomains.club",
-  "http://mesto.yandex.students.nomoredomains.club",
+// const allowedCors = [
+//   "https://mesto.yandex.students.nomoredomains.club",
+//   "http://mesto.yandex.students.nomoredomains.club",
 
-];
+// ];
 
 app.use(cors());
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
+// app.use((req, res, next) => {
+//   const { origin } = req.headers;
 
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', true);
-  }
+//   if (allowedCors.includes(origin)) {
+//     res.header('Access-Control-Allow-Origin', origin);
 
-  next();
-});
+//   }
 
-app.options('*', cors());
+//   next();
+// });
+
+// app.options('*', cors());
 
 
 // app.use((req, res, next) => {
@@ -75,7 +75,7 @@ app.use(
   })
 );
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.use(requestLogger); // подключаем логгер запросов
 

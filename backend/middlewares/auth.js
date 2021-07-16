@@ -15,13 +15,13 @@ module.exports.auth = (req, res, next) => {
   }
 
   const token = extractBearerToken(authorization);
-  // console.log(`token in auth: ${token}`);
+  console.log(`token in auth: ${token}`);
 
   let payload;
 
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
-    console.log(payload)
+
   } catch (err) {
     console.log("Если с токеном что-то не так - вернётся ошибка")
     throw new UnauthorizedError(`Необходима авторизация`);

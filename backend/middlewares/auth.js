@@ -2,9 +2,7 @@ const UnauthorizedError = require("../errors/unauthorized-err");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, NODE_ENV } = process.env;
 
-const extractBearerToken = (header) => {
-  return header.replace('Bearer ', '');
-};
+
 module.exports.auth = (req, res, next) => {
   const { authorization } = req.headers;
 
@@ -14,7 +12,7 @@ module.exports.auth = (req, res, next) => {
     throw new UnauthorizedError("Необходима авторизация");
   }
 
-  const token = extractBearerToken(authorization);
+  const token = authorization.replace('Bearer ', '');
   console.log(`token in auth: ${token}`);
 
   let payload;

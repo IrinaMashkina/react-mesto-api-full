@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require("express");
 const cors = require("cors");
-app.use(cors());
+
 const bodyParser = require("body-parser");
 // const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
-
+app.use(cors());
 const { PORT = 3000 } = process.env;
 
 const { login, createNewUser } = require("./controllers/users.js");
@@ -32,26 +32,11 @@ mongoose.connection.on("connected", () => console.log("Mongodb connected"));
 mongoose.connection.on("error", (err) => console.log(`Ошибка ${err}`));
 
 // Массив доменов, с которых разрешены кросс-доменные запросы
-const allowedCors = [
-  "https://mesto.yandex.students.nomoredomains.club",
-  "http://mesto.yandex.students.nomoredomains.club",
+// const allowedCors = [
+//   "https://mesto.yandex.students.nomoredomains.club",
+//   "http://mesto.yandex.students.nomoredomains.club",
 
-];
-
-app.use(cors());
-
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-
-  next();
-});
-
-app.options('*', cors());
-
+// ];
 
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");

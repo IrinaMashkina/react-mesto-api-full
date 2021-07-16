@@ -120,7 +120,7 @@ const login = (req, res, next) => {
           expiresIn: "7d",
         }
       );
-      res.send({ token });
+      res.json({ token });
     })
     .catch(() => {
       throw new UnauthorizedError('Неправильный запрос');

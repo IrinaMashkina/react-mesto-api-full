@@ -113,8 +113,8 @@ class Api {
 
 // создать экземпляр Api
 const api = new Api({
-  // baseUrl: "https://mesto-api.students.nomoredomains.club",
-  baseUrl: "http://localhost:5000",
+  baseUrl: "https://mesto-api.students.nomoredomains.club",
+  // baseUrl: "http://localhost:5000",
 
 });
 

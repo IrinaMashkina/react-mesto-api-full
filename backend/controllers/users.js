@@ -20,12 +20,13 @@ const getAllUsers = (req, res, next) => {
 };
 
 const getMyInfo = (req, res, next) => {
+  console.log(req.user._id);
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
         throw new NotFoundError("Нет пользователя с таким id");
       }
-      return res.send(user);
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === "CastError") {
@@ -111,7 +112,6 @@ const login = (req, res, next) => {
 
   User.findUserByCredentials(email, password)
     .then((user) => {
-      console.log(user._id)
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === "production" ? JWT_SECRET : "some-secret-key",
@@ -119,7 +119,9 @@ const login = (req, res, next) => {
           expiresIn: "7d",
         }
       );
-      res.send({ token });
+      res
+        .cookie("jwt", token, { maxAge: 3600000 * 24 * 7, httpOnly: true })
+        .send({ token });
     })
     .catch(next);
 };

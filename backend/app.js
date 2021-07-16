@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require("express");
 // const cors = require("cors");
 const bodyParser = require("body-parser");
-// const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 
 const { requestLogger, errorLogger } = require("./middlewares/logger");
@@ -91,22 +91,22 @@ app.use(
   })
 );
 
-// app.use(cookieParser());
+app.use(cookieParser());
 
 app.use(requestLogger); // подключаем логгер запросов
 
 // Чтобы на ревью мы смогли наверняка это протестировать, перед обработчиками роутов /signin и /signup добавьте такой код:
-// app.get("/crash-test", () => {
-//   setTimeout(() => {
-//     throw new Error("Сервер сейчас упадёт");
-//   }, 0);
-// });
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("Сервер сейчас упадёт");
+  }, 0);
+});
 
 app.post("/signin", login);
 app.post("/signup", createNewUser);
 
-app.use("/", auth, usersRoutes);
-app.use("/", auth, cardsRoutes);
+app.use(auth, usersRoutes);
+app.use(auth, cardsRoutes);
 
 app.use(errorLogger);
 

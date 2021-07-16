@@ -48,9 +48,17 @@ function App() {
   const [isLoadingSignin, setIsLoadingSignin] = React.useState(false);
 
   useEffect(() => {
+
     if (loggedIn) {
       setIsLoadingInitialCards(true);
       setIsLoadingUserInfo(true);
+
+      api
+      .getUserInfo()
+      .then((res) => setCurrentUser(res))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingUserInfo(false));
+    
       
       api
         .getInitialCards()
@@ -66,15 +74,10 @@ function App() {
             }))
           );
         })
-        .catch((err) => console.log(err)).finally(() => setIsLoadingInitialCards(false))
+        .catch((err) => console.log(err))
+        .finally(() => setIsLoadingInitialCards(false))
         
-    api
-      .getUserInfo()
-      .then((res) => setCurrentUser(res))
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoadingUserInfo(false));
-    
-      
+
       }
   }, [loggedIn]);
    
@@ -182,6 +185,7 @@ function App() {
       .then((res) => { 
         setUserEmail(data.email);
         localStorage.setItem("jwt", res.token);
+        
         setLoggedIn(true);
         history.push("/");
         

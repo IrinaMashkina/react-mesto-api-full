@@ -91,6 +91,7 @@ const api = new Api({
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
+    credentials: 'include',
     authorization: `Bearer ${localStorage.getItem("jwt")}`,
     
   },

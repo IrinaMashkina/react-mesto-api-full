@@ -6,6 +6,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const NotFoundError = require("../errors/not-found-err");
 const BadRequestError = require("../errors/bad-request-err");
 const DubbleError = require("../errors/dubble-err");
+const UnauthorizedError = require("../errors/unauthorized-err");
 
 const getAllUsers = (req, res, next) => {
   User.find({})
@@ -121,8 +122,12 @@ const login = (req, res, next) => {
       );
       res.send({ token });
     })
+    .catch(() => {
+      throw new UnauthorizedError('Неправильный запрос');
+    })
     .catch(next);
 };
+
 
 module.exports = {
   getAllUsers,

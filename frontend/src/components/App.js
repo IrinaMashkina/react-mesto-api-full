@@ -48,18 +48,16 @@ function App() {
   const [isLoadingSignin, setIsLoadingSignin] = React.useState(false);
 
   useEffect(() => {
-
     if (loggedIn) {
       setIsLoadingInitialCards(true);
       setIsLoadingUserInfo(true);
 
       api
-      .getUserInfo()
-      .then((res) => setCurrentUser(res))
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoadingUserInfo(false));
-    
-      
+        .getUserInfo()
+        .then((res) => setCurrentUser(res))
+        .catch((err) => console.log(err))
+        .finally(() => setIsLoadingUserInfo(false));
+
       api
         .getInitialCards()
         .then((data) => {
@@ -75,13 +73,9 @@ function App() {
           );
         })
         .catch((err) => console.log(err))
-        .finally(() => setIsLoadingInitialCards(false))
-        
-
-      }
+        .finally(() => setIsLoadingInitialCards(false));
+    }
   }, [loggedIn]);
-   
-
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -182,13 +176,14 @@ function App() {
     setIsLoadingSignin(true);
     auth
       .authorize(data)
-      .then((res) => { 
-        setUserEmail(data.email);
-        localStorage.setItem("jwt", res.token);
-        
-        setLoggedIn(true);
-        history.push("/");
-        
+      .then((res) => {
+        if (res.token) {
+          setUserEmail(data.email);
+          localStorage.setItem("jwt", res.token);
+
+          setLoggedIn(true);
+          history.push("/");
+        }
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoadingSignin(false));
@@ -227,7 +222,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, [history]);
- 
 
   React.useEffect(() => {
     const token = localStorage.getItem("jwt");

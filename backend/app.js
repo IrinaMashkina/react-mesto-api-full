@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require("express");
-// const cors = require("cors");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
@@ -31,56 +31,40 @@ mongoose.connection.on("connected", () => console.log("Mongodb connected"));
 mongoose.connection.on("error", (err) => console.log(`Ошибка ${err}`));
 
 // Массив доменов, с которых разрешены кросс-доменные запросы
-// const allowedCors = [
-//   "https://mesto.yandex.students.nomoredomains.club",
-//   "http://mesto.yandex.students.nomoredomains.club",
+const allowedCors = [
+  "https://mesto.yandex.students.nomoredomains.club",
+  "http://mesto.yandex.students.nomoredomains.club",
 
-// ];
+];
 
-// app.use(function (req, res, next) {
-//   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
-//   const { method } = req; // Сохраняем тип запроса (HTTP-метод) в соответствующую переменную
-//   const requestHeaders = req.headers["access-control-request-headers"];
-
-//   if (allowedCors.includes(origin)) {
-//     if (method === "OPTIONS") {
-//       res.header("Access-Control-Allow-Methods", requestHeaders);
-//       res.header("Access-Control-Allow-Origin", origin);
-//     }
-//     res.header("Access-Control-Allow-Origin", origin);
-//   }
-
-//   next();
-// });
-
-// app.use(cors());
-
-// app.use((req, res, next) => {
-//   const { origin } = req.headers;
-
-//   if (allowedCors.includes(origin)) {
-//     res.header('Access-Control-Allow-Origin', origin);
-//     res.header('Access-Control-Allow-Credentials', true);
-//   }
-
-//   next();
-// });
-
-// app.options('*', cors());
-
+app.use(cors());
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
-  );
-  if (req.method === "OPTIONS") {
-   return  res.sendStatus(200);
+  const { origin } = req.headers;
+
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', true);
   }
+
   next();
 });
+
+app.options('*', cors());
+
+
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "*");
+//   res.header(
+//     "Access-Control-Allow-Methods",
+//     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+//   );
+//   if (req.method === "OPTIONS") {
+//    return  res.sendStatus(200);
+//   }
+//   next();
+// });
 
 
 

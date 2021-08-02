@@ -12,7 +12,9 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 
 const { PORT = 3000 } = process.env;
+
 app.use(cors());
+
 const { login, createNewUser } = require("./controllers/users.js");
 const { auth } = require("./middlewares/auth");
 const usersRoutes = require("./routes/users.js");
@@ -65,11 +67,11 @@ app.use(
 app.use(requestLogger); // подключаем логгер запросов
 
 // Чтобы на ревью мы смогли наверняка это протестировать, перед обработчиками роутов /signin и /signup добавьте такой код:
-app.get("/crash-test", () => {
-  setTimeout(() => {
-    throw new Error("Сервер сейчас упадёт");
-  }, 0);
-});
+// app.get("/crash-test", () => {
+//   setTimeout(() => {
+//     throw new Error("Сервер сейчас упадёт");
+//   }, 0);
+// });
 
 app.post("/signin", login);
 app.post("/signup", createNewUser);

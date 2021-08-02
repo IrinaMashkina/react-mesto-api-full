@@ -9,7 +9,7 @@
     "lint": "npx eslint ."
   },
   "keywords": [],
-  "author": "",
+  "author": "Irina Mashkina",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^7.11.0",
